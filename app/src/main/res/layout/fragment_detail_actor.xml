@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_default">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headerBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_800"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="11dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/app_text_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/yellow_800"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/app_name" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvActorImage"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/headerBar"
+            tools:listitem="@layout/item_actor_image" />
+
+
+        <TextView
+            android:id="@+id/tvNumber"
+            style="@style/app_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_view_number"
+            android:gravity="start"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="1/9"
+            android:textColor="@color/yellow_800"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/rvActorImage"
+            app:layout_constraintTop_toTopOf="@id/rvActorImage" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivActor"
+            android:layout_width="100dp"
+            android:layout_height="123dp"
+            android:layout_marginStart="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/actor_1"
+            app:layout_constraintBottom_toBottomOf="@+id/rvActorImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvActorImage"
+            app:shapeAppearanceOverlay="@style/circle_4" />
+
+
+        <TextView
+            android:id="@+id/tvActorName"
+            style="@style/app_text_medium"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start"
+            android:text="@string/app_name"
+            android:textColor="@color/yellow_800"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivActor"
+            app:layout_constraintTop_toBottomOf="@+id/rvActorImage" />
+
+        <TextView
+            android:id="@+id/tvActorInfo"
+            style="@style/app_text_regular_light"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:text="@string/app_name"
+            android:textColor="@color/yellow_700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivActor"
+            app:layout_constraintTop_toBottomOf="@+id/tvActorName" />
+
+        <ImageView
+            android:id="@+id/ivInstagram"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/instagram_black"
+            app:layout_constraintStart_toStartOf="@+id/tvActorName"
+            app:layout_constraintTop_toBottomOf="@+id/tvActorInfo"
+            app:tint="@color/grey_600" />
+
+        <ImageView
+            android:id="@+id/ivTwitter"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/twitter"
+            app:layout_constraintStart_toEndOf="@+id/ivInstagram"
+            app:layout_constraintTop_toBottomOf="@+id/tvActorInfo" />
+
+
+        <TextView
+            android:id="@+id/tvActorBio"
+            style="@style/app_text_regular"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="6"
+            android:text="@string/long_text"
+            android:textColor="@color/grey_400"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivInstagram" />
+
+
+        <TextView
+            android:id="@+id/tvKnowFor"
+            style="@style/app_text_bold"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="middle"
+            android:gravity="start"
+            android:maxLines="6"
+            android:text="@string/known_for"
+            android:textColor="@color/yellow_700"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvActorBio" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/viewType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvKnowFor">
+
+            <TextView
+                android:id="@+id/typeAll"
+                style="@style/app_text_semi_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_view_small_type_selected"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="All"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/typeTVSeries"
+                style="@style/app_text_semi_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_view_small_type"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="TV Series"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/typeMovie"
+                style="@style/app_text_semi_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_view_small_type"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="Movie"
+                android:textColor="@color/white" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvActorKnownFor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/viewType"
+            tools:listitem="@layout/item_movies_trending" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

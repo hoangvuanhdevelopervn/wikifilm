@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="circle_2">
+        <item name="cornerSize">2%</item>
+    </style>
+
+    <style name="circle_4">
+        <item name="cornerSize">4%</item>
+    </style>
+
+    <style name="circle_8">
+        <item name="cornerSize">8%</item>
+    </style>
+
+    <style name="circle_16">
+        <item name="cornerSize">16%</item>
+    </style>
+
+    <style name="circle_40">
+        <item name="cornerSize">40%</item>
+    </style>
+
+    <style name="circle_50">
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

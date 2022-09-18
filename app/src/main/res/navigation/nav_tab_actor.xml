@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_tab_actor"
+    app:startDestination="@id/actorFragment">
+
+    <fragment
+        android:id="@+id/actorFragment"
+        android:name="com.hvasoftware.wikifilm.ui.actors.ActorsFragment"
+        android:label="@string/title_actors"
+        tools:layout="@layout/fragment_actors">
+
+        <action
+            android:id="@+id/action_to_actorDetailFragment"
+            app:destination="@id/actorDetailFragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/actorDetailFragment"
+        android:name="com.hvasoftware.wikifilm.ui.actors.DetailActorFragment"
+        android:label="@string/title_actors"
+        tools:layout="@layout/fragment_detail_actor">
+
+        <argument
+            android:name="actorId"
+            android:defaultValue="1"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="actorName"
+            android:defaultValue="Harry Potter"
+            app:argType="string"
+            app:nullable="true" />
+
+    </fragment>
+
+
+</navigation>

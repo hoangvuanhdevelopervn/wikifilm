@@ -1,7 +1,7 @@
 package com.hvasoftware.wikifilm.callback
 
 import com.android.volley.VolleyError
-import com.hvasoftware.wikifilm.model.PopularActorResponse
+import com.hvasoftware.wikifilm.model.response.PopularActorResponse
 
 interface IActorListener {
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.extensions.convertDate
@@ -14,7 +15,10 @@ import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.Movie
 
 
-class AdapterTrending(private val mContext: Context) :
+class AdapterTrending(
+    private val mContext: Context,
+    private val itemClickedListener: (Movie) -> Unit
+) :
     RecyclerView.Adapter<AdapterTrending.MyViewHolder>() {
 
     private var mData: MutableList<Movie> = ArrayList()
@@ -48,6 +52,7 @@ class AdapterTrending(private val mContext: Context) :
         } else if (item.first_air_date != null && item.first_air_date.isNotEmpty()) {
             holder.tvMovieDes.text = convertDate(item.first_air_date)
         }
+        holder.rootView.setOnClickListener { itemClickedListener(item) }
     }
 
 
@@ -56,6 +61,7 @@ class AdapterTrending(private val mContext: Context) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val rootView: CardView = itemView.findViewById(R.id.rootView)
         val ivMovie: ImageView = itemView.findViewById(R.id.ivMovie)
         val tvRating: TextView = itemView.findViewById(R.id.tvRating)
         val tvMovieName: TextView = itemView.findViewById(R.id.tvMovieName)

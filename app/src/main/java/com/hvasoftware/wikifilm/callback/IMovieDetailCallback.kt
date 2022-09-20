@@ -1,11 +1,9 @@
 package com.hvasoftware.wikifilm.callback
 
-import com.android.volley.VolleyError
 import com.hvasoftware.wikifilm.model.response.TrendingResponse
 
-interface IMovieTrendingCallback {
+interface IMovieDetailCallback : BaseCallback {
 
     fun onSuccess(response: TrendingResponse)
 
-    fun onError(error: VolleyError)
 }

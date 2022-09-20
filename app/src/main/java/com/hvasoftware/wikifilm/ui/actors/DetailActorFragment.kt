@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.android.volley.VolleyError
+import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.callback.IActorSocialCallback
 import com.hvasoftware.wikifilm.callback.IDetailActorListener
@@ -18,9 +19,9 @@ import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.extensions.toastLong
 import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.Actor
-import com.hvasoftware.wikifilm.model.ListActorImageResponse
-import com.hvasoftware.wikifilm.model.SocialActorResponse
-import com.hvasoftware.wikifilm.model.TrendingResponse
+import com.hvasoftware.wikifilm.model.response.ListActorImageResponse
+import com.hvasoftware.wikifilm.model.response.SocialActorResponse
+import com.hvasoftware.wikifilm.model.response.TrendingResponse
 import com.hvasoftware.wikifilm.ui.home.AdapterTrending
 import kotlin.random.Random
 
@@ -41,6 +42,7 @@ class DetailActorFragment : BaseFragment() {
 
     override fun onViewClick() {
         binding.ivBack.setOnClickListener { onBackPress() }
+        onClickType()
     }
 
     override fun initData() {
@@ -80,7 +82,9 @@ class DetailActorFragment : BaseFragment() {
     }
 
     private fun setupAdapterTrending() {
-        adapterTrending = AdapterTrending(requireContext())
+        adapterTrending = AdapterTrending(requireContext(), itemClickedListener = {
+
+        })
         binding.rvActorKnownFor.adapter = adapterTrending
     }
 
@@ -165,6 +169,28 @@ class DetailActorFragment : BaseFragment() {
                     error.localizedMessage?.let { toastLong(it) }
                 }
             })
+    }
+
+
+    private fun onClickType() {
+        binding.typeAll.setOnClickListener {
+            //  loadData(Constants.MediaType.ALL)
+            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type_selected)
+            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type)
+            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type)
+        }
+        binding.typeTVSeries.setOnClickListener {
+            //  loadData(Constants.MediaType.TV)
+            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type)
+            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type_selected)
+            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type)
+        }
+        binding.typeMovie.setOnClickListener {
+            //  loadData(Constants.MediaType.MOVIE)
+            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type)
+            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type)
+            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type_selected)
+        }
     }
 
 

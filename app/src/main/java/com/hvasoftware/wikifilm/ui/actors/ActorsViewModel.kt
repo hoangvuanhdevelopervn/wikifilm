@@ -10,6 +10,10 @@ import com.google.gson.Gson
 import com.hvasoftware.wikifilm.callback.*
 import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.*
+import com.hvasoftware.wikifilm.model.response.ListActorImageResponse
+import com.hvasoftware.wikifilm.model.response.PopularActorResponse
+import com.hvasoftware.wikifilm.model.response.SocialActorResponse
+import com.hvasoftware.wikifilm.model.response.TrendingResponse
 import org.json.JSONException
 import org.json.JSONObject
 

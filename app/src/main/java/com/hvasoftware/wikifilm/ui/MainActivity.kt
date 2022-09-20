@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.base
+package com.hvasoftware.wikifilm.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,7 +1,6 @@
 package com.hvasoftware.wikifilm.ui.actors
 
 import android.view.View
-import androidx.fragment.app.viewModels
 import com.android.volley.VolleyError
 import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.callback.IActorListener
@@ -10,7 +9,7 @@ import com.hvasoftware.wikifilm.databinding.FragmentActorsBinding
 import com.hvasoftware.wikifilm.extensions.hide
 import com.hvasoftware.wikifilm.extensions.toastLong
 import com.hvasoftware.wikifilm.model.Actor
-import com.hvasoftware.wikifilm.model.PopularActorResponse
+import com.hvasoftware.wikifilm.model.response.PopularActorResponse
 
 class ActorsFragment : BaseFragment() {
 

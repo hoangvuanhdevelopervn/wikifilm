@@ -8,13 +8,38 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
+import com.hvasoftware.wikifilm.callback.IMovieUpcomingCallback
 import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.Movie
-import com.hvasoftware.wikifilm.model.TrendingResponse
+import com.hvasoftware.wikifilm.model.response.TrendingResponse
+import com.hvasoftware.wikifilm.model.response.UpcomingMovieResponse
 import org.json.JSONException
 import org.json.JSONObject
 
 class HomeViewModel : ViewModel() {
+
+    fun loadListMovieUpcoming(
+        context: Context,
+        page: Int,
+        callback: IMovieUpcomingCallback
+    ) {
+        val queue = Volley.newRequestQueue(context)
+        val urlUpcoming =
+            "https://api.themoviedb.org/3/movie/upcoming?api_key=${Constants.API_KEY}&language=en-US&page=$page"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(
+                Method.GET, urlUpcoming, null, Response.Listener { response ->
+                    val data =
+                        Gson().fromJson(response.toString(), UpcomingMovieResponse::class.java)
+                    callback.onSuccess(data)
+                }, Response.ErrorListener { error ->
+                    callback.onError(error)
+                    Log.wtf("getListImages", "error: ${Gson().toJson(error)}")
+                }) {
+            }
+        queue.add(jsonObjectRequest)
+    }
+
 
     fun loadListMovieTrending(
         context: Context,

@@ -12,12 +12,85 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvUpcoming"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_movie_upcoming" />
+
+            <TextView
+                android:id="@+id/tvNumber"
+                style="@style/app_text_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_view_number"
+                android:gravity="start"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="1/9"
+                android:textColor="@color/yellow_800"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/rvUpcoming"
+                app:layout_constraintTop_toTopOf="@id/rvUpcoming" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivMovieUpcoming"
+                android:layout_width="105dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="360dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/circle_2"
+                tools:src="@drawable/actor_1" />
+
+            <TextView
+                android:id="@+id/tvMovieName"
+                style="@style/app_text_medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="6dp"
+                android:gravity="start"
+                android:text="@string/app_name"
+                android:textColor="@color/grey_400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
+                app:layout_constraintTop_toBottomOf="@+id/rvUpcoming" />
+
+            <TextView
+                android:id="@+id/tvMovieInfo"
+                style="@style/app_text_regular_light"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="2"
+                android:textColor="@color/grey_400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
+                app:layout_constraintTop_toBottomOf="@+id/tvMovieName"
+                tools:text="@string/long_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="40dp">
 
 
             <TextView
@@ -28,7 +101,7 @@
                 android:layout_marginStart="16dp"
                 android:text="Trending"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="40sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,6 +189,44 @@
             android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_movies_trending" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp">
+
+
+            <TextView
+                android:id="@+id/tvTopRatedTitle"
+                style="@style/app_text_semi_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Top Rated"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                style="@style/app_text_semi_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="SHOW ALL"
+                android:textAllCaps="true"
+                android:textColor="@color/blue_700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.ui.home
+package com.hvasoftware.wikifilm.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -15,11 +15,11 @@ import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.Movie
 
 
-class AdapterTrending(
+class AdapterTVSeries(
     private val mContext: Context,
     private val itemClickedListener: (Movie) -> Unit
 ) :
-    RecyclerView.Adapter<AdapterTrending.MyViewHolder>() {
+    RecyclerView.Adapter<AdapterTVSeries.MyViewHolder>() {
 
     private var mData: MutableList<Movie> = ArrayList()
 
@@ -67,6 +67,4 @@ class AdapterTrending(
         val tvMovieName: TextView = itemView.findViewById(R.id.tvMovieName)
         val tvMovieDes: TextView = itemView.findViewById(R.id.tvMovieDes)
     }
-
-
 }

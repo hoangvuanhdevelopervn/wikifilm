@@ -22,7 +22,7 @@ import com.hvasoftware.wikifilm.model.Actor
 import com.hvasoftware.wikifilm.model.response.ListActorImageResponse
 import com.hvasoftware.wikifilm.model.response.SocialActorResponse
 import com.hvasoftware.wikifilm.model.response.TrendingResponse
-import com.hvasoftware.wikifilm.ui.home.AdapterTrending
+import com.hvasoftware.wikifilm.ui.home.adapter.AdapterTrending
 import kotlin.random.Random
 
 class DetailActorFragment : BaseFragment() {
@@ -112,8 +112,10 @@ class DetailActorFragment : BaseFragment() {
                 if (data.isNotEmpty() && response.profiles.size > 2) {
                     val rdPosition = Random.nextInt(data.size - 1)
                     binding.ivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[rdPosition].file_path}")
+                    binding.civActor.setUrl("${Constants.BASE_URL_IMAGE}${data[rdPosition].file_path}")
                 } else {
                     binding.ivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[0].file_path}")
+                    binding.civActor.setUrl("${Constants.BASE_URL_IMAGE}${data[0].file_path}")
                 }
             }
 

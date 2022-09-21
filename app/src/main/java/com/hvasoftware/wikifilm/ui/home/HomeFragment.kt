@@ -6,18 +6,17 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.android.volley.VolleyError
-import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
-import com.hvasoftware.wikifilm.callback.IMovieUpcomingCallback
 import com.hvasoftware.wikifilm.databinding.FragmentHomeBinding
 import com.hvasoftware.wikifilm.extensions.getCurrentPosition
 import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.extensions.toastLong
 import com.hvasoftware.wikifilm.help.Constants
+import com.hvasoftware.wikifilm.model.FilterType
 import com.hvasoftware.wikifilm.model.Movie
 import com.hvasoftware.wikifilm.model.response.TrendingResponse
-import com.hvasoftware.wikifilm.model.response.UpcomingMovieResponse
+import com.hvasoftware.wikifilm.ui.home.adapter.*
 
 class HomeFragment : BaseFragment() {
 
@@ -26,6 +25,9 @@ class HomeFragment : BaseFragment() {
     private lateinit var adapterTrending: AdapterTrending
     private lateinit var adapterUpcoming: AdapterUpcoming
     private val mListMovieUpcoming: MutableList<Movie> = arrayListOf()
+    private lateinit var adapterFilter: AdapterFilter
+    private lateinit var adapterMovie: AdapterMovie
+    private lateinit var adapterTVSeries: AdapterTVSeries
 
 
     override fun setContentView(): View {
@@ -38,48 +40,33 @@ class HomeFragment : BaseFragment() {
 
         setupAdapterUpcoming()
 
-        setupAdapter()
+        setupAdapterFilterTrending()
+
+        setupAdapterTrending()
+
+        setupAdapterFilterMovie()
+
+        setupAdapterFilterTVSeries()
 
     }
 
     override fun loadData() {
 
-        loadListMovieUpcoming()
+        loadListMovies("upcoming")
 
         loadListMovieTrending(Constants.MediaType.ALL)
 
+        loadListMovies("now_playing")
+
+        loadListTVSeries("airing_today")
 
     }
 
-    override fun onViewClick() {
-        binding.typeAll.setOnClickListener {
-            loadListMovieTrending(Constants.MediaType.ALL)
-            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type_selected)
-            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type)
-            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type)
-        }
-        binding.typeTVSeries.setOnClickListener {
-            loadListMovieTrending(Constants.MediaType.TV)
-            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type)
-            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type_selected)
-            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type)
-        }
-        binding.typeMovie.setOnClickListener {
-            loadListMovieTrending(Constants.MediaType.MOVIE)
-            binding.typeAll.setBackgroundResource(R.drawable.bg_view_small_type)
-            binding.typeTVSeries.setBackgroundResource(R.drawable.bg_view_small_type)
-            binding.typeMovie.setBackgroundResource(R.drawable.bg_view_small_type_selected)
-        }
-    }
+    override fun onViewClick() {}
 
     private fun setupAdapterUpcoming() {
         adapterUpcoming = AdapterUpcoming(requireContext(), itemClickedListener = {
-            navigateToFragment(
-                HomeFragmentDirections.actionToDetailMovieFragment(
-                    it.id,
-                    Constants.FilmType.MOVIE.toString()
-                )
-            )
+            navigateToFragment(HomeFragmentDirections.actionToDetailMovieFragment(it.id))
         })
         binding.rvUpcoming.adapter = adapterUpcoming
         val snapHelper: SnapHelper = PagerSnapHelper()
@@ -95,20 +82,41 @@ class HomeFragment : BaseFragment() {
         })
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapterFilterTrending() {
+        val listFilterMovie: MutableList<FilterType> = arrayListOf()
+        listFilterMovie.add(FilterType(Constants.FilterType.ALL, true))
+        listFilterMovie.add(FilterType(Constants.FilterType.TV_SERIES, false))
+        listFilterMovie.add(FilterType(Constants.FilterType.MOVIE, false))
+        adapterFilter = AdapterFilter(requireContext(), true, itemClickedListener = {
+            when (it.type) {
+                Constants.FilterType.ALL -> {
+                    loadListMovieTrending(Constants.MediaType.ALL)
+                }
+                Constants.FilterType.TV_SERIES -> {
+                    loadListMovieTrending(Constants.MediaType.TV)
+                }
+                else -> {
+                    loadListMovieTrending(Constants.MediaType.MOVIE)
+                }
+            }
+        })
+        binding.rvFilterTrending.adapter = adapterFilter
+        adapterFilter.setData(listFilterMovie)
+    }
+
+
+    private fun setupAdapterTrending() {
         adapterTrending = AdapterTrending(requireContext(), itemClickedListener = {
             if (it.media_type == "movie") {
                 navigateToFragment(
                     HomeFragmentDirections.actionToDetailMovieFragment(
-                        it.id,
-                        Constants.FilmType.MOVIE.toString()
+                        it.id
                     )
                 )
             } else {
                 navigateToFragment(
-                    HomeFragmentDirections.actionToDetailMovieFragment(
-                        it.id,
-                        Constants.FilmType.TV.toString()
+                    HomeFragmentDirections.actionToDetailTVSeriesFragment(
+                        it.id
                     )
                 )
             }
@@ -116,16 +124,121 @@ class HomeFragment : BaseFragment() {
         binding.rvTrending.adapter = adapterTrending
     }
 
-    private fun loadListMovieUpcoming() {
-        viewModel.loadListMovieUpcoming(
+
+    private fun loadListMovieTrending(type: Constants.MediaType) {
+        viewModel.loadListMovieTrending(
             requireContext(),
+            type.toString().lowercase(),
+            Constants.TimeWindow.WEEK.toString().lowercase(),
+            object : IMovieTrendingCallback {
+                override fun onSuccess(response: TrendingResponse) {
+                    adapterTrending.setData(response.results)
+                }
+
+                override fun onError(error: VolleyError) {
+                    error.localizedMessage?.let { toastLong(it) }
+                }
+            })
+    }
+
+    private fun setupAdapterFilterMovie() {
+        val listFilterMovie: MutableList<FilterType> = arrayListOf()
+        listFilterMovie.add(FilterType(Constants.FilterType.NOW_PLAYING, true))
+        listFilterMovie.add(FilterType(Constants.FilterType.POPULAR, false))
+        listFilterMovie.add(FilterType(Constants.FilterType.TOP_RATED, false))
+        adapterFilter = AdapterFilter(requireContext(), true, itemClickedListener = {
+            when (it.type) {
+                Constants.FilterType.NOW_PLAYING -> {
+                    loadListMovies("now_playing")
+                }
+                Constants.FilterType.POPULAR -> {
+                    loadListMovies("popular")
+                }
+                else -> {
+                    loadListMovies("top_rated")
+                }
+            }
+        })
+        binding.rvFilterMovie.adapter = adapterFilter
+        adapterFilter.setData(listFilterMovie)
+        adapterMovie = AdapterMovie(requireContext(), itemClickedListener = {
+            navigateToFragment(
+                HomeFragmentDirections.actionToDetailMovieFragment(
+                    it.id
+                )
+            )
+        })
+        binding.rvMovies.adapter = adapterMovie
+    }
+
+    private fun setupAdapterFilterTVSeries() {
+        val listFilterMovie: MutableList<FilterType> = arrayListOf()
+        listFilterMovie.add(FilterType(Constants.FilterType.AIRING_TODAY, true))
+        listFilterMovie.add(FilterType(Constants.FilterType.ON_AIR, false))
+        listFilterMovie.add(FilterType(Constants.FilterType.POPULAR, false))
+        listFilterMovie.add(FilterType(Constants.FilterType.TOP_RATED, false))
+        adapterFilter = AdapterFilter(requireContext(), true, itemClickedListener = {
+            when (it.type) {
+                Constants.FilterType.AIRING_TODAY -> {
+                    loadListTVSeries("airing_today")
+                }
+                Constants.FilterType.ON_AIR -> {
+                    loadListTVSeries("on_the_air")
+                }
+                Constants.FilterType.POPULAR -> {
+                    loadListTVSeries("popular")
+                }
+                else -> {
+                    loadListTVSeries("top_rated")
+                }
+            }
+        })
+        binding.rvFilterTVSeries.adapter = adapterFilter
+        adapterFilter.setData(listFilterMovie)
+        adapterTVSeries = AdapterTVSeries(requireContext(), itemClickedListener = {
+            navigateToFragment(
+                HomeFragmentDirections.actionToDetailTVSeriesFragment(
+                    it.id
+                )
+            )
+        })
+        binding.rvTVSeries.adapter = adapterTVSeries
+    }
+
+
+    private fun loadListTVSeries(type: String) {
+        viewModel.loadListTVSeries(
+            requireContext(),
+            type,
             1,
-            object : IMovieUpcomingCallback {
-                override fun onSuccess(response: UpcomingMovieResponse) {
-                    mListMovieUpcoming.clear()
-                    mListMovieUpcoming.addAll(response.results)
-                    adapterUpcoming.setData(mListMovieUpcoming)
-                    setupMovieUpcoming(0)
+            object : IMovieTrendingCallback {
+                override fun onSuccess(response: TrendingResponse) {
+                    adapterTVSeries.setData(response.results)
+                }
+
+                override fun onError(error: VolleyError) {
+                    error.localizedMessage?.let { toastLong(it) }
+                }
+            })
+    }
+
+
+    private fun loadListMovies(type: String) {
+        viewModel.loadListMovies(
+            requireContext(),
+            type,
+            1,
+            object : IMovieTrendingCallback {
+                override fun onSuccess(response: TrendingResponse) {
+                    if (type == "upcoming") {
+                        mListMovieUpcoming.clear()
+                        mListMovieUpcoming.addAll(response.results)
+                        adapterUpcoming.setData(mListMovieUpcoming)
+                        setupMovieUpcoming(0)
+                    } else {
+                        adapterMovie.setData(response.results)
+                    }
+
                 }
 
                 override fun onError(error: VolleyError) {
@@ -144,22 +257,6 @@ class HomeFragment : BaseFragment() {
         }
         binding.tvMovieInfo.text = movie.overview
         binding.tvNumber.text = "${position + 1}/${mListMovieUpcoming.size}"
-    }
-
-    private fun loadListMovieTrending(type: Constants.MediaType) {
-        viewModel.loadListMovieTrending(
-            requireContext(),
-            type.toString().lowercase(),
-            Constants.TimeWindow.WEEK.toString().lowercase(),
-            object : IMovieTrendingCallback {
-                override fun onSuccess(response: TrendingResponse) {
-                    adapterTrending.setData(response.results)
-                }
-
-                override fun onError(error: VolleyError) {
-                    error.localizedMessage?.let { toastLong(it) }
-                }
-            })
     }
 
 

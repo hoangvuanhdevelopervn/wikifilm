@@ -52,8 +52,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
 
 
+    // UI
     // use in detail actor fragment
     implementation("com.tbuonomo:dotsindicator:4.3")
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
+
 
 
     // to fetch data

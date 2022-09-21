@@ -8,29 +8,55 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
-import com.hvasoftware.wikifilm.callback.IMovieUpcomingCallback
 import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.model.Movie
 import com.hvasoftware.wikifilm.model.response.TrendingResponse
-import com.hvasoftware.wikifilm.model.response.UpcomingMovieResponse
 import org.json.JSONException
 import org.json.JSONObject
 
 class HomeViewModel : ViewModel() {
 
-    fun loadListMovieUpcoming(
+
+    // https://api.themoviedb.org/3/movie/latest?api_key=18d9c9521c7d3ce97f566aae0838608e&language=en-US
+    // https://api.themoviedb.org/3/movie/now_playing?api_key=18d9c9521c7d3ce97f566aae0838608e&language=en-US&page=1
+
+    fun loadListMovies(
         context: Context,
+        type: String,
         page: Int,
-        callback: IMovieUpcomingCallback
+        callback: IMovieTrendingCallback
     ) {
         val queue = Volley.newRequestQueue(context)
-        val urlUpcoming =
-            "https://api.themoviedb.org/3/movie/upcoming?api_key=${Constants.API_KEY}&language=en-US&page=$page"
+        val url =
+            "https://api.themoviedb.org/3/movie/$type?api_key=${Constants.API_KEY}&language=en-US&page=$page"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
-                Method.GET, urlUpcoming, null, Response.Listener { response ->
+                Method.GET, url, null, Response.Listener { response ->
                     val data =
-                        Gson().fromJson(response.toString(), UpcomingMovieResponse::class.java)
+                        Gson().fromJson(response.toString(), TrendingResponse::class.java)
+                    callback.onSuccess(data)
+                }, Response.ErrorListener { error ->
+                    callback.onError(error)
+                    Log.wtf("getListImages", "error: ${Gson().toJson(error)}")
+                }) {
+            }
+        queue.add(jsonObjectRequest)
+    }
+
+    fun loadListTVSeries(
+        context: Context,
+        type: String,
+        page: Int,
+        callback: IMovieTrendingCallback
+    ) {
+        val queue = Volley.newRequestQueue(context)
+        val url =
+            "https://api.themoviedb.org/3/tv/$type?api_key=${Constants.API_KEY}&language=en-US&page=$page"
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(
+                Method.GET, url, null, Response.Listener { response ->
+                    val data =
+                        Gson().fromJson(response.toString(), TrendingResponse::class.java)
                     callback.onSuccess(data)
                 }, Response.ErrorListener { error ->
                     callback.onError(error)

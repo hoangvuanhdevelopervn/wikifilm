@@ -15,13 +15,17 @@
             android:id="@+id/action_to_detailMovieFragment"
             app:destination="@id/detailMovieFragment" />
 
+        <action
+            android:id="@+id/action_to_detailTVSeriesFragment"
+            app:destination="@id/detailTVSeriesFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/detailMovieFragment"
         android:name="com.hvasoftware.wikifilm.ui.home.DetailMovieFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_detail_movie" >
+        tools:layout="@layout/fragment_detail_movie">
 
         <argument
             android:name="movieId"
@@ -29,9 +33,17 @@
             app:argType="string"
             app:nullable="true" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailTVSeriesFragment"
+        android:name="com.hvasoftware.wikifilm.ui.home.DetailTVSeriesFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_detail_tv_series">
+
         <argument
-            android:name="type"
-            android:defaultValue="movie"
+            android:name="tvId"
+            android:defaultValue="1"
             app:argType="string"
             app:nullable="true" />
 

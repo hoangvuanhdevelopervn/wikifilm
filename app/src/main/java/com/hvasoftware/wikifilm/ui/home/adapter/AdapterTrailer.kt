@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.ui.home
+package com.hvasoftware.wikifilm.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -42,9 +42,10 @@ class AdapterTrailer(
             AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
-                val defaultPlayerUiController =
-                    DefaultPlayerUiController(holder.youTubePlayerView, youTubePlayer)
-                holder.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
+                // to show full screen but it's not work in adapter
+//                val defaultPlayerUiController =
+//                    DefaultPlayerUiController(holder.youTubePlayerView, youTubePlayer)
+//                holder.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
                 youTubePlayer.cueVideo(item.key, 0f)
             }
         })

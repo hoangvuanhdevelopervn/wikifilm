@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.ui.home
+package com.hvasoftware.wikifilm.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

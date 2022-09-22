@@ -5,11 +5,11 @@ import com.android.volley.VolleyError
 import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.callback.IActorListener
 import com.hvasoftware.wikifilm.callback.IScrollListener
+import com.hvasoftware.wikifilm.data.Actor
+import com.hvasoftware.wikifilm.data.response.PopularActorResponse
 import com.hvasoftware.wikifilm.databinding.FragmentActorsBinding
 import com.hvasoftware.wikifilm.extensions.hide
 import com.hvasoftware.wikifilm.extensions.toastLong
-import com.hvasoftware.wikifilm.data.Actor
-import com.hvasoftware.wikifilm.data.response.PopularActorResponse
 
 class ActorsFragment : BaseFragment() {
 
@@ -34,7 +34,12 @@ class ActorsFragment : BaseFragment() {
 
     override fun loadData() {
 
-        loadListActors()
+        if (mListActors.isEmpty()) {
+            loadListActors()
+        } else {
+            binding.pbLoading.hide()
+            mAdapterActors.setData(mListActors)
+        }
 
     }
 
@@ -51,7 +56,7 @@ class ActorsFragment : BaseFragment() {
         mAdapterActors.setScroll(object : IScrollListener {
             override fun onScroll(position: Int) {
                 if (position == mAdapterActors.itemCount - 1 && mIsLoadMore) {
-                    loadData()
+                    loadListActors()
                 }
             }
         })
@@ -60,7 +65,6 @@ class ActorsFragment : BaseFragment() {
     private fun loadListActors() {
         actorsViewModel.loadListActors(requireContext(), mCurrentPage, object : IActorListener {
             override fun onSuccess(response: PopularActorResponse) {
-                binding.pbLoading.hide()
                 if (response.results.isEmpty() || mCurrentPage > 20) {
                     mIsLoadMore = false
                 } else {
@@ -71,7 +75,6 @@ class ActorsFragment : BaseFragment() {
             }
 
             override fun onError(error: VolleyError) {
-                binding.pbLoading.hide()
                 error.localizedMessage?.let { toastLong(it) }
                 mIsLoadMore = false
             }

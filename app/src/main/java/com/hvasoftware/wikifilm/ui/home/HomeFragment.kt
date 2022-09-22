@@ -2,13 +2,10 @@ package com.hvasoftware.wikifilm.ui.home
 
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.android.volley.VolleyError
-import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.base.BaseResponse
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
@@ -30,9 +27,11 @@ class HomeFragment : BaseFragment() {
     private lateinit var adapterTrending: AdapterTrending
     private lateinit var adapterUpcoming: AdapterUpcoming
     private val mListMovieUpcoming: MutableList<Movie> = arrayListOf()
+    private val mListMovieTrending: MutableList<Movie> = arrayListOf()
     private lateinit var adapterFilter: AdapterFilter
     private lateinit var adapterMovie: AdapterMovie
     private lateinit var adapterTVSeries: AdapterTVSeries
+    private var mCurrentPosition = 0
 
 
     override fun setContentView(): View {
@@ -57,9 +56,20 @@ class HomeFragment : BaseFragment() {
 
     override fun loadData() {
 
-        loadListMovies("upcoming")
+        if (mListMovieUpcoming.isEmpty()) {
+            loadListMovies("upcoming")
+        } else {
+            adapterUpcoming.setData(mListMovieUpcoming)
+            setupMovieUpcoming(mCurrentPosition)
+        }
 
         loadListMovieTrending(Constants.MediaType.ALL)
+
+//        if (mListMovieTrending.isEmpty()) {
+//            loadListMovieTrending(Constants.MediaType.ALL)
+//        } else {
+//            adapterTrending.setData(mListMovieTrending)
+//        }
 
         loadListMovies("now_playing")
 
@@ -72,12 +82,6 @@ class HomeFragment : BaseFragment() {
     private fun setupAdapterUpcoming() {
         adapterUpcoming = AdapterUpcoming(requireContext(), itemClickedListener = {
             navigateToFragment(HomeFragmentDirections.actionToDetailMovieFragment(it.id))
-            val navController: NavController =
-                requireActivity().findNavController(R.id.nav_tab_home)
-            navController.run {
-                popBackStack()
-                navigate(R.id.detailMovieFragment)
-            }
         })
         binding.rvUpcoming.adapter = adapterUpcoming
         val snapHelper: SnapHelper = PagerSnapHelper()
@@ -86,7 +90,7 @@ class HomeFragment : BaseFragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val mCurrentPosition = binding.rvUpcoming.getCurrentPosition()
+                    mCurrentPosition = binding.rvUpcoming.getCurrentPosition()
                     setupMovieUpcoming(mCurrentPosition)
                 }
             }
@@ -94,10 +98,10 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupAdapterFilterTrending() {
-        val listFilterMovie: MutableList<FilterType> = arrayListOf()
-        listFilterMovie.add(FilterType(Constants.FilterType.ALL, true))
-        listFilterMovie.add(FilterType(Constants.FilterType.TV_SERIES, false))
-        listFilterMovie.add(FilterType(Constants.FilterType.MOVIE, false))
+        val listFilterTrending: MutableList<FilterType> = arrayListOf()
+        listFilterTrending.add(FilterType(Constants.FilterType.ALL, true))
+        listFilterTrending.add(FilterType(Constants.FilterType.TV_SERIES, false))
+        listFilterTrending.add(FilterType(Constants.FilterType.MOVIE, false))
         adapterFilter = AdapterFilter(requireContext(), true, itemClickedListener = {
             when (it.type) {
                 Constants.FilterType.ALL -> {
@@ -112,7 +116,7 @@ class HomeFragment : BaseFragment() {
             }
         })
         binding.rvFilterTrending.adapter = adapterFilter
-        adapterFilter.setData(listFilterMovie)
+        adapterFilter.setData(listFilterTrending)
     }
 
 
@@ -137,6 +141,9 @@ class HomeFragment : BaseFragment() {
 
 
     private fun loadListMovieTrending(type: Constants.MediaType) {
+
+        logger("loadListMovieTrending: ${type.toString()}")
+
         viewModel.loadListMovieTrending(
             requireContext(),
             type.toString().lowercase(),
@@ -147,7 +154,9 @@ class HomeFragment : BaseFragment() {
                 is BaseResponse.Loading -> {
                 }
                 is BaseResponse.Success -> {
-                    adapterTrending.setData(it.data.results)
+                    mListMovieTrending.clear()
+                    mListMovieTrending.addAll(it.data.results)
+                    adapterTrending.setData(mListMovieTrending)
                 }
                 is BaseResponse.Error -> {
                     it.serverError?.localizedMessage?.let { it1 -> logger(it1) }

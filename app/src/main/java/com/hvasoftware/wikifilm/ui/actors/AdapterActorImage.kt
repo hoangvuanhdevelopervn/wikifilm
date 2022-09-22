@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.help.Constants
-import com.hvasoftware.wikifilm.model.ActorImage
+import com.hvasoftware.wikifilm.data.ActorImage
 
 
 class AdapterActorImage(

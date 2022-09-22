@@ -11,13 +11,15 @@ import androidx.navigation.fragment.findNavController
 import com.hvasoftware.wikifilm.extensions.logger
 import com.hvasoftware.wikifilm.ui.actors.ActorsViewModel
 import com.hvasoftware.wikifilm.ui.home.MovieViewModel
+import com.hvasoftware.wikifilm.ui.home.MovieViewModelFactory
 
 abstract class BaseFragment : Fragment(), BaseContract.View, BaseContract.Data {
 
     protected val TAG = this.javaClass.simpleName
     protected val actorsViewModel: ActorsViewModel by viewModels()
-    protected val movieViewModel: MovieViewModel by viewModels()
-
+    protected val movieViewModel: MovieViewModel by viewModels() {
+        MovieViewModelFactory((requireActivity().application as MyApplication).movieRepository)
+    }
 
 
     override fun onCreateView(

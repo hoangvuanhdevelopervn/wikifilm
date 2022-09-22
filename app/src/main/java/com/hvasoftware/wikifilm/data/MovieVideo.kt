@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.model
+package com.hvasoftware.wikifilm.data
 
 data class MovieVideo(
     val iso_639_1: String,

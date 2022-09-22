@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.model
+package com.hvasoftware.wikifilm.data
 
 import com.hvasoftware.wikifilm.help.Constants
 

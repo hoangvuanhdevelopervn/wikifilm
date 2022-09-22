@@ -1,7 +1,7 @@
 package com.hvasoftware.wikifilm.callback
 
 import com.android.volley.VolleyError
-import com.hvasoftware.wikifilm.model.Actor
+import com.hvasoftware.wikifilm.data.Actor
 
 interface IDetailActorListener {
 

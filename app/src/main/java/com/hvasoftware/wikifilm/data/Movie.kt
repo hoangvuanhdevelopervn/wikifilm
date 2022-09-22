@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.model
+package com.hvasoftware.wikifilm.data
 
 data class Movie(
     val id: String,

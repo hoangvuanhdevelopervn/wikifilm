@@ -2,20 +2,25 @@ package com.hvasoftware.wikifilm.ui.home
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.android.volley.VolleyError
+import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.base.BaseFragment
+import com.hvasoftware.wikifilm.base.BaseResponse
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
+import com.hvasoftware.wikifilm.data.FilterType
+import com.hvasoftware.wikifilm.data.Movie
+import com.hvasoftware.wikifilm.data.response.TrendingResponse
 import com.hvasoftware.wikifilm.databinding.FragmentHomeBinding
 import com.hvasoftware.wikifilm.extensions.getCurrentPosition
+import com.hvasoftware.wikifilm.extensions.logger
 import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.extensions.toastLong
 import com.hvasoftware.wikifilm.help.Constants
-import com.hvasoftware.wikifilm.model.FilterType
-import com.hvasoftware.wikifilm.model.Movie
-import com.hvasoftware.wikifilm.model.response.TrendingResponse
 import com.hvasoftware.wikifilm.ui.home.adapter.*
 
 class HomeFragment : BaseFragment() {
@@ -67,6 +72,12 @@ class HomeFragment : BaseFragment() {
     private fun setupAdapterUpcoming() {
         adapterUpcoming = AdapterUpcoming(requireContext(), itemClickedListener = {
             navigateToFragment(HomeFragmentDirections.actionToDetailMovieFragment(it.id))
+            val navController: NavController =
+                requireActivity().findNavController(R.id.nav_tab_home)
+            navController.run {
+                popBackStack()
+                navigate(R.id.detailMovieFragment)
+            }
         })
         binding.rvUpcoming.adapter = adapterUpcoming
         val snapHelper: SnapHelper = PagerSnapHelper()
@@ -129,16 +140,21 @@ class HomeFragment : BaseFragment() {
         viewModel.loadListMovieTrending(
             requireContext(),
             type.toString().lowercase(),
-            Constants.TimeWindow.WEEK.toString().lowercase(),
-            object : IMovieTrendingCallback {
-                override fun onSuccess(response: TrendingResponse) {
-                    adapterTrending.setData(response.results)
+            Constants.TimeWindow.WEEK.toString().lowercase()
+        )
+        viewModel.loadListMovieTrendingState.observe(this) {
+            when (it) {
+                is BaseResponse.Loading -> {
                 }
-
-                override fun onError(error: VolleyError) {
-                    error.localizedMessage?.let { toastLong(it) }
+                is BaseResponse.Success -> {
+                    adapterTrending.setData(it.data.results)
                 }
-            })
+                is BaseResponse.Error -> {
+                    it.serverError?.localizedMessage?.let { it1 -> logger(it1) }
+                }
+                else -> {}
+            }
+        }
     }
 
     private fun setupAdapterFilterMovie() {

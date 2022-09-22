@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.model.response
+package com.hvasoftware.wikifilm.data.response
 
 data class UpcomingDate(
     val maximum: String,

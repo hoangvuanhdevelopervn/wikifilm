@@ -13,7 +13,7 @@ import com.hvasoftware.wikifilm.callback.IScrollListener
 import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.help.Constants
-import com.hvasoftware.wikifilm.model.Actor
+import com.hvasoftware.wikifilm.data.Actor
 
 
 class AdapterActors(

@@ -9,7 +9,7 @@ import com.hvasoftware.wikifilm.base.BaseFragment
 import com.hvasoftware.wikifilm.callback.IMovieVideoCallback
 import com.hvasoftware.wikifilm.databinding.FragmentDetailMovieBinding
 import com.hvasoftware.wikifilm.extensions.logger
-import com.hvasoftware.wikifilm.model.response.MovieVideoResponse
+import com.hvasoftware.wikifilm.data.response.MovieVideoResponse
 import com.hvasoftware.wikifilm.ui.home.adapter.AdapterTrailer
 
 

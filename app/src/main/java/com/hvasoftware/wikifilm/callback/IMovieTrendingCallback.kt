@@ -1,7 +1,7 @@
 package com.hvasoftware.wikifilm.callback
 
 import com.android.volley.VolleyError
-import com.hvasoftware.wikifilm.model.response.TrendingResponse
+import com.hvasoftware.wikifilm.data.response.TrendingResponse
 
 interface IMovieTrendingCallback {
 

@@ -18,10 +18,10 @@ import com.hvasoftware.wikifilm.extensions.logger
 import com.hvasoftware.wikifilm.extensions.setUrl
 import com.hvasoftware.wikifilm.extensions.toastLong
 import com.hvasoftware.wikifilm.help.Constants
-import com.hvasoftware.wikifilm.model.Actor
-import com.hvasoftware.wikifilm.model.response.ListActorImageResponse
-import com.hvasoftware.wikifilm.model.response.SocialActorResponse
-import com.hvasoftware.wikifilm.model.response.TrendingResponse
+import com.hvasoftware.wikifilm.data.Actor
+import com.hvasoftware.wikifilm.data.response.ListActorImageResponse
+import com.hvasoftware.wikifilm.data.response.SocialActorResponse
+import com.hvasoftware.wikifilm.data.response.TrendingResponse
 import com.hvasoftware.wikifilm.ui.home.adapter.AdapterTrending
 import kotlin.random.Random
 

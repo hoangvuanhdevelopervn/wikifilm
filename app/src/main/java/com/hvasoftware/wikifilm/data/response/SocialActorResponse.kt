@@ -1,4 +1,4 @@
-package com.hvasoftware.wikifilm.model.response
+package com.hvasoftware.wikifilm.data.response
 
 data class SocialActorResponse(
     val id: Int,

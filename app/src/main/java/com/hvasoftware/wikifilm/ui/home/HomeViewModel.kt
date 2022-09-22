@@ -2,15 +2,19 @@ package com.hvasoftware.wikifilm.ui.home
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import com.hvasoftware.wikifilm.base.BaseResponse
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
+import com.hvasoftware.wikifilm.data.Movie
+import com.hvasoftware.wikifilm.data.response.TrendingResponse
 import com.hvasoftware.wikifilm.help.Constants
-import com.hvasoftware.wikifilm.model.Movie
-import com.hvasoftware.wikifilm.model.response.TrendingResponse
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -19,6 +23,9 @@ class HomeViewModel : ViewModel() {
 
     // https://api.themoviedb.org/3/movie/latest?api_key=18d9c9521c7d3ce97f566aae0838608e&language=en-US
     // https://api.themoviedb.org/3/movie/now_playing?api_key=18d9c9521c7d3ce97f566aae0838608e&language=en-US&page=1
+
+    val loadListMovieTrendingState: MutableLiveData<BaseResponse<TrendingResponse>> =
+        MutableLiveData(BaseResponse.Idle)
 
     fun loadListMovies(
         context: Context,
@@ -70,21 +77,19 @@ class HomeViewModel : ViewModel() {
     fun loadListMovieTrending(
         context: Context,
         type: String,
-        time: String,
-        callback: IMovieTrendingCallback
+        time: String
     ) {
+        loadListMovieTrendingState.value = BaseResponse.Loading
         val queue = Volley.newRequestQueue(context)
         val urlTrending =
             "https://api.themoviedb.org/3/trending/$type/$time?api_key=${Constants.API_KEY}"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
                 Method.GET, urlTrending, null, Response.Listener { response ->
-                    callback.onSuccess(
-                        handleResponse(response)
-                    )
+                    loadListMovieTrendingState.value =
+                        BaseResponse.Success(handleResponse(response))
                 }, Response.ErrorListener { error ->
-                    callback.onError(error)
-                    Log.wtf("getListImages", "error: ${Gson().toJson(error)}")
+                    loadListMovieTrendingState.value = BaseResponse.Error(error)
                 }) {
             }
         queue.add(jsonObjectRequest)

@@ -1,6 +1,6 @@
-package com.hvasoftware.wikifilm.model.response
+package com.hvasoftware.wikifilm.data.response
 
-import com.hvasoftware.wikifilm.model.Movie
+import com.hvasoftware.wikifilm.data.Movie
 
 data class UpcomingMovieResponse(
     val page: Int,

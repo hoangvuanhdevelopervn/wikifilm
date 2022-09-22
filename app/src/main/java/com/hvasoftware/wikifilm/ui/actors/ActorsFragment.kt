@@ -8,8 +8,8 @@ import com.hvasoftware.wikifilm.callback.IScrollListener
 import com.hvasoftware.wikifilm.databinding.FragmentActorsBinding
 import com.hvasoftware.wikifilm.extensions.hide
 import com.hvasoftware.wikifilm.extensions.toastLong
-import com.hvasoftware.wikifilm.model.Actor
-import com.hvasoftware.wikifilm.model.response.PopularActorResponse
+import com.hvasoftware.wikifilm.data.Actor
+import com.hvasoftware.wikifilm.data.response.PopularActorResponse
 
 class ActorsFragment : BaseFragment() {
 

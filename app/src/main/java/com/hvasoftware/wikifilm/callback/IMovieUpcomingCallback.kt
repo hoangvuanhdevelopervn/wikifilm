@@ -1,6 +1,6 @@
 package com.hvasoftware.wikifilm.callback
 
-import com.hvasoftware.wikifilm.model.response.UpcomingMovieResponse
+import com.hvasoftware.wikifilm.data.response.UpcomingMovieResponse
 
 interface IMovieUpcomingCallback : BaseCallback {
 

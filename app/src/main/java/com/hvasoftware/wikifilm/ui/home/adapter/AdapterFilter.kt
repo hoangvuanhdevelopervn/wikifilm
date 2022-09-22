@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hvasoftware.wikifilm.R
 import com.hvasoftware.wikifilm.extensions.getFilterName
-import com.hvasoftware.wikifilm.model.FilterType
+import com.hvasoftware.wikifilm.data.FilterType
 
 
 class AdapterFilter(

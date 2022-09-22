@@ -1,6 +1,6 @@
 package com.hvasoftware.wikifilm.callback
 
-import com.hvasoftware.wikifilm.model.response.TrendingResponse
+import com.hvasoftware.wikifilm.data.response.TrendingResponse
 
 interface IMovieDetailCallback : BaseCallback {
 

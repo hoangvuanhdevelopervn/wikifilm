@@ -10,64 +10,106 @@
         android:id="@+id/headerBar"
         layout="@layout/header_bar" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTrailers"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/headerBar"
-        tools:listitem="@layout/item_trailer" />
+        app:layout_constraintTop_toBottomOf="@+id/headerBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivMovie"
-        android:layout_width="105dp"
-        android:layout_height="130dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvTrailers"
-        app:shapeAppearanceOverlay="@style/circle_2"
-        tools:src="@drawable/actor_1" />
+            <TextView
+                android:id="@+id/tvMovieName"
+                style="@style/app_text_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:gravity="start"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/the_lord_of_the_rings" />
+
+            <TextView
+                android:id="@+id/tvMovieInfo"
+                style="@style/app_text_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="start"
+                android:textColor="@color/grey_500"
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvMovieName"
+                tools:text="2022 PG-13 2h 5m" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTrailers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/tvMovieInfo"
+                tools:listitem="@layout/item_trailer" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovieType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivMovie"
-        app:layout_constraintTop_toTopOf="@+id/ivMovie" />
-
-    <TextView
-        android:id="@+id/tvMovieDes"
-        style="@style/app_text_regular_light"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/long_text"
-        android:textColor="@color/grey_400"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivMovie"
-        app:layout_constraintTop_toBottomOf="@+id/rvMovieType" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/sivMovie"
+                android:layout_width="105dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvTrailers"
+                app:shapeAppearanceOverlay="@style/circle_2"
+                tools:src="@drawable/actor_1" />
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/grey_200"
-        app:layout_constraintTop_toBottomOf="@+id/ivMovie" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovieGenre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sivMovie"
+                app:layout_constraintTop_toTopOf="@+id/sivMovie"
+                tools:listitem="@layout/item_movie_genre" />
 
 
+            <TextView
+                android:id="@+id/tvMovieDes"
+                style="@style/app_text_regular_light"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="vertical"
+                android:textColor="@color/grey_400"
+                app:layout_constraintBottom_toBottomOf="@+id/sivMovie"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sivMovie"
+                app:layout_constraintTop_toBottomOf="@+id/rvMovieGenre"
+                tools:text="ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80 ng Võ cho hay, các nước xác định giá đất Nhà nước bằng 70–80" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/grey_200"
+                app:layout_constraintTop_toBottomOf="@+id/sivMovie" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

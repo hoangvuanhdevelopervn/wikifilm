@@ -14,3 +14,11 @@ fun convertDate(date: String?): String {
     return newDate?.let { simpleDateFormat.format(it) }.toString()
 }
 
+
+// runtime = 148
+fun convertMovieTime(runTime: Int): String {
+    val hour = runTime / 60
+    val minute = runTime - (60 * hour)
+    return "${hour}h${minute}m"
+}
+

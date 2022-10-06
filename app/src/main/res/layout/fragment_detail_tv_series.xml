@@ -45,7 +45,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMovieType"
+                android:id="@+id/rvMovieGenre"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
@@ -66,7 +66,7 @@
                 android:textColor="@color/grey_400"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivMovie"
-                app:layout_constraintTop_toBottomOf="@+id/rvMovieType" />
+                app:layout_constraintTop_toBottomOf="@+id/rvMovieGenre" />
 
 
             <View

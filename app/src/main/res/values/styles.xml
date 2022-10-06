@@ -12,29 +12,34 @@
         <item name="fontFamily">@font/work_sans_semi_bold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">start</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="app_text_bold">
         <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">start</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="app_text_regular">
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">start</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="app_text_regular_light">
         <item name="fontFamily">@font/roboto_light</item>
         <item name="android:textSize">12sp</item>
         <item name="android:gravity">start</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="app_text_italic">
         <item name="fontFamily">@font/roboto_italic</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>

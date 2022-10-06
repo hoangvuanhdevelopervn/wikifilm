@@ -11,6 +11,7 @@ import com.hvasoftware.wikifilm.data.MovieVideo
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController
 
 
 class AdapterTrailer(
@@ -42,9 +43,9 @@ class AdapterTrailer(
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
                 // to show full screen but it's not work in adapter
-//                val defaultPlayerUiController =
-//                    DefaultPlayerUiController(holder.youTubePlayerView, youTubePlayer)
-//                holder.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
+                val defaultPlayerUiController =
+                    DefaultPlayerUiController(holder.youTubePlayerView, youTubePlayer)
+                holder.youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
                 youTubePlayer.cueVideo(item.key, 0f)
             }
         })

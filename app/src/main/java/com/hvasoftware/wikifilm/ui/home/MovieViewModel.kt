@@ -4,20 +4,22 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.hvasoftware.wikifilm.base.BaseResponse
 import com.hvasoftware.wikifilm.callback.IMovieVideoCallback
+import com.hvasoftware.wikifilm.data.Movie
 import com.hvasoftware.wikifilm.data.MovieRepository
 import com.hvasoftware.wikifilm.data.response.MovieVideoResponse
-import com.hvasoftware.wikifilm.data.response.TrendingResponse
 import com.hvasoftware.wikifilm.help.Constants
-import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
+
+
+    val loadDetailMovieState: MutableLiveData<BaseResponse<Movie>> =
+        MutableLiveData(BaseResponse.Idle)
 
 
     fun loadVideoMovie(
@@ -63,7 +65,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     fun loadDetailMovie(
         context: Context,
         id: String,
-        callback: IMovieVideoCallback
     ) {
         val queue = Volley.newRequestQueue(context)
         val url =
@@ -71,14 +72,15 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
                 Method.GET, url, null, Response.Listener { response ->
-                    val data = Gson().fromJson(response.toString(), MovieVideoResponse::class.java)
-                    callback.onSuccess(data)
+                    val data = Gson().fromJson(response.toString(), Movie::class.java)
+                    loadDetailMovieState.value = BaseResponse.Success(data)
                 }, Response.ErrorListener { error ->
-                    callback.onError(error)
+                    loadDetailMovieState.value = BaseResponse.Error(error)
                 }) {
             }
         queue.add(jsonObjectRequest)
     }
+
 
 
 }

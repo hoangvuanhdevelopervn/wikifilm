@@ -15,6 +15,10 @@
             android:id="@+id/action_to_actorDetailFragment"
             app:destination="@id/actorDetailFragment" />
 
+        <action
+            android:id="@+id/action_to_searchActorsFragment"
+            app:destination="@id/searchActorsFragment" />
+
 
     </fragment>
 
@@ -23,6 +27,10 @@
         android:name="com.hvasoftware.wikifilm.ui.actors.DetailActorFragment"
         android:label="@string/title_actors"
         tools:layout="@layout/fragment_detail_actor">
+
+        <action
+            android:id="@+id/action_to_biographyActorFragment"
+            app:destination="@id/biographyActorFragment" />
 
         <argument
             android:name="actorId"
@@ -38,5 +46,32 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/searchActorsFragment"
+        android:name="com.hvasoftware.wikifilm.ui.actors.SearchActorsFragment"
+        android:label="Search Actor"
+        tools:layout="@layout/fragment_search_actors" />
+
+
+    <fragment
+        android:id="@+id/biographyActorFragment"
+        android:name="com.hvasoftware.wikifilm.ui.actors.BiographyActorFragment"
+        android:label="@string/title_actors"
+        tools:layout="@layout/fragment_bio_actor">
+
+        <argument
+            android:name="actorName"
+            android:defaultValue="Harry Potter"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="actorBio"
+            android:defaultValue="Harry Potter"
+            app:argType="string"
+            app:nullable="true" />
+
+    </fragment>
 
 </navigation>

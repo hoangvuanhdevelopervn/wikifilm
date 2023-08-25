@@ -3,7 +3,7 @@
     <style name="app_text_medium">
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">start</item>
         <item name="android:fontWeight" tools:targetApi="o">500</item>
         <item name="android:textColor">@android:color/white</item>
     </style>

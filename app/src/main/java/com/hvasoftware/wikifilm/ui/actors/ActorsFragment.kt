@@ -9,6 +9,7 @@ import com.hvasoftware.wikifilm.data.Actor
 import com.hvasoftware.wikifilm.data.response.PopularActorResponse
 import com.hvasoftware.wikifilm.databinding.FragmentActorsBinding
 import com.hvasoftware.wikifilm.extensions.hide
+import com.hvasoftware.wikifilm.extensions.logger
 import com.hvasoftware.wikifilm.extensions.toastLong
 
 class ActorsFragment : BaseFragment() {
@@ -33,7 +34,6 @@ class ActorsFragment : BaseFragment() {
     }
 
     override fun loadData() {
-
         if (mListActors.isEmpty()) {
             loadListActors()
         } else {
@@ -46,6 +46,9 @@ class ActorsFragment : BaseFragment() {
 
     override fun onViewClick() {
 
+        binding.ibSearch.setOnClickListener {
+            navigateToFragment(ActorsFragmentDirections.actionToSearchActorsFragment())
+        }
     }
 
     private fun setupAdapter() {
@@ -72,11 +75,13 @@ class ActorsFragment : BaseFragment() {
                     mAdapterActors.setData(mListActors)
                     mCurrentPage += 1
                 }
+                binding.pbLoading.hide()
             }
 
             override fun onError(error: VolleyError) {
                 error.localizedMessage?.let { toastLong(it) }
                 mIsLoadMore = false
+                binding.pbLoading.hide()
             }
         })
     }

@@ -1,276 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background_default"
     tools:context=".ui.home.HomeFragment">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/app_text_semi_bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/tvHomeDes"
+        style="@style/app_text_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="start"
+        android:text="@string/tab_actor_description"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvUpcoming"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_movie_upcoming" />
+
+                <TextView
+                    android:id="@+id/tvNumber"
+                    style="@style/app_text_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_view_number"
+                    android:gravity="start"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    android:text="1/9"
+                    android:textColor="@color/yellow_800"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/rvUpcoming"
+                    app:layout_constraintTop_toTopOf="@id/rvUpcoming" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivMovieUpcoming"
+                    android:layout_width="105dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="360dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/circle_2"
+                    tools:src="@drawable/actor_1" />
+
+                <TextView
+                    android:id="@+id/tvMovieName"
+                    style="@style/app_text_medium"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="start"
+                    android:text="@string/app_name"
+                    android:textColor="@color/grey_400"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
+                    app:layout_constraintTop_toBottomOf="@+id/rvUpcoming" />
+
+                <TextView
+                    android:id="@+id/tvMovieInfo"
+                    style="@style/app_text_regular_light"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:textColor="@color/grey_400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMovieName"
+                    tools:text="@string/long_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+
+                <TextView
+                    android:id="@+id/tvTrendingTitle"
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Trending"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="SHOW ALL"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue_700"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvUpcoming"
+                android:id="@+id/rvFilterTrending"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_movie_upcoming" />
-
-            <TextView
-                android:id="@+id/tvNumber"
-                style="@style/app_text_bold"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_view_number"
-                android:gravity="start"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="2dp"
-                android:text="1/9"
-                android:textColor="@color/yellow_800"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@id/rvUpcoming"
-                app:layout_constraintTop_toTopOf="@id/rvUpcoming" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivMovieUpcoming"
-                android:layout_width="105dp"
-                android:layout_height="130dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="360dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/circle_2"
-                tools:src="@drawable/actor_1" />
-
-            <TextView
-                android:id="@+id/tvMovieName"
-                style="@style/app_text_medium"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="6dp"
-                android:gravity="start"
-                android:text="@string/app_name"
-                android:textColor="@color/grey_400"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
-                app:layout_constraintTop_toBottomOf="@+id/rvUpcoming" />
-
-            <TextView
-                android:id="@+id/tvMovieInfo"
-                style="@style/app_text_regular_light"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:maxLines="2"
-                android:textColor="@color/grey_400"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivMovieUpcoming"
-                app:layout_constraintTop_toBottomOf="@+id/tvMovieName"
-                tools:text="@string/long_text" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                tools:listitem="@layout/item_filter_type" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
-
-
-            <TextView
-                android:id="@+id/tvTrendingTitle"
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTrending"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Trending"
-                android:textColor="@color/white"
-                android:textSize="27sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movies_trending" />
 
 
-            <TextView
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="SHOW ALL"
-                android:textAllCaps="true"
-                android:textColor="@color/blue_700"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="40dp">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvPopularTitle"
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="TV Series"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFilterTrending"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_filter_type" />
+                <TextView
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="SHOW ALL"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue_700"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTrending"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_movies_trending" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
-
-
-            <TextView
-                android:id="@+id/tvPopularTitle"
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFilterTVSeries"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="TV Series"
-                android:textColor="@color/white"
-                android:textSize="27sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_filter_type" />
 
 
-            <TextView
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTVSeries"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="SHOW ALL"
-                android:textAllCaps="true"
-                android:textColor="@color/blue_700"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movies_trending" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFilterTVSeries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_filter_type" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTVSeries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_movies_trending" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
-
-
-            <TextView
-                android:id="@+id/tvTopRatedTitle"
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Movie's"
-                android:textColor="@color/white"
-                android:textSize="27sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="40dp">
 
 
-            <TextView
-                style="@style/app_text_semi_bold"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvTopRatedTitle"
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Movie's"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    style="@style/app_text_semi_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="SHOW ALL"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue_700"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFilterMovie"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="SHOW ALL"
-                android:textAllCaps="true"
-                android:textColor="@color/blue_700"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_filter_type" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movies_trending" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFilterMovie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_filter_type" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_movies_trending" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
+    </ScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

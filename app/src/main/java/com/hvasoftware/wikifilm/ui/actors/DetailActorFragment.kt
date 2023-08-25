@@ -12,16 +12,13 @@ import com.hvasoftware.wikifilm.callback.IActorSocialCallback
 import com.hvasoftware.wikifilm.callback.IDetailActorListener
 import com.hvasoftware.wikifilm.callback.IListActorImageCallback
 import com.hvasoftware.wikifilm.callback.IMovieTrendingCallback
-import com.hvasoftware.wikifilm.databinding.FragmentDetailActorBinding
-import com.hvasoftware.wikifilm.extensions.getCurrentPosition
-import com.hvasoftware.wikifilm.extensions.logger
-import com.hvasoftware.wikifilm.extensions.setUrl
-import com.hvasoftware.wikifilm.extensions.toastLong
-import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.data.Actor
 import com.hvasoftware.wikifilm.data.response.ListActorImageResponse
 import com.hvasoftware.wikifilm.data.response.SocialActorResponse
 import com.hvasoftware.wikifilm.data.response.TrendingResponse
+import com.hvasoftware.wikifilm.databinding.FragmentDetailActorBinding
+import com.hvasoftware.wikifilm.extensions.*
+import com.hvasoftware.wikifilm.help.Constants
 import com.hvasoftware.wikifilm.ui.home.adapter.AdapterTrending
 import kotlin.random.Random
 
@@ -33,6 +30,8 @@ class DetailActorFragment : BaseFragment() {
     private lateinit var adapterActorImage: AdapterActorImage
     private lateinit var adapterTrending: AdapterTrending
     private var mTotalImage = 0
+    private var mActorName = ""
+    private var mActorBiography = ""
 
 
     override fun setContentView(): View {
@@ -41,7 +40,17 @@ class DetailActorFragment : BaseFragment() {
     }
 
     override fun onViewClick() {
-        binding.ivBack.setOnClickListener { onBackPress() }
+        binding.headerBar.ivBack.setOnClickListener { onBackPress() }
+
+        binding.tvActorBio.setOnClickListener {
+            navigateToFragment(
+                DetailActorFragmentDirections.actionToBiographyActorFragment(
+                    mActorName,
+                    mActorBiography
+                )
+            )
+        }
+
         onClickType()
     }
 
@@ -58,8 +67,8 @@ class DetailActorFragment : BaseFragment() {
 
     private fun handleArgument() {
         mId = args.actorId.toString()
-        binding.tvTitle.text = args.actorName
-        binding.tvActorName.text = args.actorName
+        mActorName = args.actorName.toString()
+        binding.headerBar.tvTitle.text = args.actorName
     }
 
 
@@ -105,21 +114,26 @@ class DetailActorFragment : BaseFragment() {
     private fun loadListActorImages() {
         actorsViewModel.loadListActorImage(requireContext(), mId, object : IListActorImageCallback {
             override fun onSuccess(response: ListActorImageResponse) {
+                binding.pbLoading.hide()
                 val data = response.profiles
                 adapterActorImage.setData(data)
                 mTotalImage = data.size
                 binding.tvNumber.text = "1/${data.size}"
-                if (data.isNotEmpty() && response.profiles.size > 2) {
+                if (data.isNullOrEmpty()) {
+                    toastLong("No Data")
+                    onBackPress()
+                } else if (response.profiles.size > 2) {
                     val rdPosition = Random.nextInt(data.size - 1)
-                    binding.ivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[rdPosition].file_path}")
+                    binding.sivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[rdPosition].file_path}")
                     binding.civActor.setUrl("${Constants.BASE_URL_IMAGE}${data[rdPosition].file_path}")
                 } else {
-                    binding.ivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[0].file_path}")
+                    binding.sivActor.setUrl("${Constants.BASE_URL_IMAGE}${data[0].file_path}")
                     binding.civActor.setUrl("${Constants.BASE_URL_IMAGE}${data[0].file_path}")
                 }
             }
 
             override fun onError(error: VolleyError) {
+                binding.pbLoading.hide()
                 error.localizedMessage?.let { toastLong(it) }
             }
         })
@@ -131,8 +145,9 @@ class DetailActorFragment : BaseFragment() {
             mId,
             object : IDetailActorListener {
                 override fun onSuccess(actor: Actor) {
-                    binding.tvActorInfo.text = actor.place_of_birth
+                    mActorBiography = actor.biography
                     binding.tvActorBio.text = actor.biography
+                    binding.tvActorBorn.text = actor.place_of_birth
                 }
 
                 override fun onError(error: VolleyError) {

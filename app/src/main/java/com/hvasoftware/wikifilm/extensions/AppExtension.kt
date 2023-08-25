@@ -30,6 +30,10 @@ internal fun Activity.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
+internal fun Fragment.toastShort(message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
 internal fun Fragment.toastLong(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
@@ -53,8 +57,6 @@ internal fun Context.copyToClipboard(text: String) {
     clipboard.setPrimaryClip(clip)
     Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
 }
-
-
 
 
 internal fun Context.shareText(content: String) {

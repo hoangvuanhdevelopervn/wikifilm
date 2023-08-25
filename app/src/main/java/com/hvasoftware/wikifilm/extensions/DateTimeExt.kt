@@ -22,3 +22,15 @@ fun convertMovieTime(runTime: Int): String {
     return "${hour}h${minute}m"
 }
 
+
+// "birthday":"1994-05-04",
+fun convertActorBirthday(birthday: String): String {
+    var spf = SimpleDateFormat("yyyy-MM-dd")
+    val newDate = spf.parse(birthday)
+    spf = SimpleDateFormat("dd MMM, yyyy")
+    return spf.format(newDate)
+}
+
+
+
+

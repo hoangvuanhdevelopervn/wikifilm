@@ -2,6 +2,11 @@
 <resources>
 
 
+    <color name="white_60">#99FFFFFF</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_87">#DE000000</color>
+    <color name="gray_4">#747C86</color>
+    <color name="gray_5">#A1A9B3</color>
 
     <color name="red_50">#FFEBEE</color>
     <color name="red_100">#FFCDD2</color>
@@ -299,11 +304,6 @@
     <color name="white">#FFFFFF</color>
     <color name="background_default">#1C1E21</color>
     <color name="bg_alert_dialog">#4D000000</color>
-
-
-
-
-
 
 
 </resources>

@@ -59,6 +59,16 @@
         app:drawableStartCompat="@drawable/ic_baseline_search_24"
         app:drawableTint="@color/grey_400" />
 
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvActors"
         android:layout_width="match_parent"

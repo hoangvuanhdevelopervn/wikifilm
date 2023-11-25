@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.hvasoftware.wikifilm.help.Constants
+import java.net.URLEncoder
 
 
 internal fun getFilterName(type: Constants.FilterType): String {
@@ -48,6 +49,10 @@ internal fun getFilterName(type: Constants.FilterType): String {
     return name
 }
 
+
+internal fun urlEncode(content: String): String {
+    return content.replace(" ", "%20")
+}
 
 internal fun shareText(context: Context, textToShare: String) {
     val shareIntent = Intent(Intent.ACTION_SEND)

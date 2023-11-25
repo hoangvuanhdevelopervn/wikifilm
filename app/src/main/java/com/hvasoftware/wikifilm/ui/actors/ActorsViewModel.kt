@@ -20,10 +20,30 @@ import org.json.JSONObject
 class ActorsViewModel : ViewModel() {
 
 
+    fun searchActor(context: Context, query: String, page: Int, callback: IActorListener) {
+        val queue = Volley.newRequestQueue(context)
+        val url =
+            "https://api.themoviedb.org/3/search/person?api_key=${Constants.API_KEY}&query=$query&include_adult=true&language=en-US&page=$page"
+        Log.d("searchActor", "=======> url: $url")
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(
+                Method.GET, url, null, Response.Listener { response ->
+                    callback.onSuccess(
+                        handleActorResponse(response)
+                    )
+                }, Response.ErrorListener { error ->
+                    callback.onError(error)
+                    Log.wtf("getListImages", "error: ${Gson().toJson(error)}")
+                }) {
+            }
+        queue.add(jsonObjectRequest)
+    }
+
+
     fun loadListActors(context: Context, page: Int, callback: IActorListener) {
         val queue = Volley.newRequestQueue(context)
         val urlPexel =
-            "https://api.themoviedb.org/3/person/popular?api_key=18d9c9521c7d3ce97f566aae0838608e&language=en-US&page=$page"
+            "https://api.themoviedb.org/3/person/popular?api_key=${Constants.API_KEY}&language=en-US&page=$page"
         val jsonObjectRequest: JsonObjectRequest =
             object : JsonObjectRequest(
                 Method.GET, urlPexel, null, Response.Listener { response ->
